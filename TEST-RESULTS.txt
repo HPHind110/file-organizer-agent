@@ -1,0 +1,33 @@
+test_access_and_validation (test_http.HttpTests.test_access_and_validation) ... ok
+test_round_trip (test_http.HttpTests.test_round_trip) ... ok
+test_stale_and_strict_approval (test_http.HttpTests.test_stale_and_strict_approval) ... ok
+test_cli_run_history_preview_and_rollback (test_organizer.AgentTests.test_cli_run_history_preview_and_rollback) ... ok
+test_compound_office_container (test_organizer.AgentTests.test_compound_office_container) ... ok
+test_custom_config_and_invalid_folder_rule (test_organizer.AgentTests.test_custom_config_and_invalid_folder_rule) ... ok
+test_existing_destination_and_repeated_scan (test_organizer.AgentTests.test_existing_destination_and_repeated_scan) ... ok
+test_existing_windows_junction_is_rejected_read_only (test_organizer.AgentTests.test_existing_windows_junction_is_rejected_read_only) ... ok
+test_hidden_are_skipped (test_organizer.AgentTests.test_hidden_are_skipped) ... ok
+test_history_paths_cannot_escape_root (test_organizer.AgentTests.test_history_paths_cannot_escape_root) ... ok
+test_junctions_do_not_escape_root (test_organizer.AgentTests.test_junctions_do_not_escape_root) ... skipped 'Windows has denied creation of a temporary junction.'
+test_late_destination_is_never_replaced (test_organizer.AgentTests.test_late_destination_is_never_replaced) ... ok
+test_late_reparse_flag_stops_moves_before_any_child_is_created (test_organizer.AgentTests.test_late_reparse_flag_stops_moves_before_any_child_is_created) ... ok
+test_locked_and_missing_files_do_not_abort_other_moves (test_organizer.AgentTests.test_locked_and_missing_files_do_not_abort_other_moves) ... ok
+test_machine_exit_after_move_or_undo (test_organizer.AgentTests.test_machine_exit_after_move_or_undo) ... ok
+test_moved_history_cannot_undo_in_another_folder (test_organizer.AgentTests.test_moved_history_cannot_undo_in_another_folder) ... ok
+test_name_signatures_categories_and_metadata (test_organizer.AgentTests.test_name_signatures_categories_and_metadata) ... ok
+test_parallel_writer_is_refused (test_organizer.AgentTests.test_parallel_writer_is_refused) ... ok
+test_preview_history_and_dry_run_do_not_write (test_organizer.AgentTests.test_preview_history_and_dry_run_do_not_write) ... ok
+test_recursion_and_duplicate_destinations (test_organizer.AgentTests.test_recursion_and_duplicate_destinations) ... ok
+test_replaced_selected_directory_does_not_get_a_journal (test_organizer.AgentTests.test_replaced_selected_directory_does_not_get_a_journal) ... ok
+test_reserved_output_is_a_file (test_organizer.AgentTests.test_reserved_output_is_a_file) ... ok
+test_review_unknown_conflicting_names_and_headers (test_organizer.AgentTests.test_review_unknown_conflicting_names_and_headers) ... ok
+test_rollback_blocked_then_retry (test_organizer.AgentTests.test_rollback_blocked_then_retry) ... ok
+test_rollback_leaves_edited_destination_alone (test_organizer.AgentTests.test_rollback_leaves_edited_destination_alone) ... ok
+test_stale_same_length_and_timestamp_detected (test_organizer.AgentTests.test_stale_same_length_and_timestamp_detected) ... ok
+test_unapproved_and_outdated_cli_plans_do_nothing (test_organizer.AgentTests.test_unapproved_and_outdated_cli_plans_do_nothing) ... ok
+test_unrecognized_state_directory_preserved (test_organizer.AgentTests.test_unrecognized_state_directory_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 16.989s
+
+OK (skipped=1)
