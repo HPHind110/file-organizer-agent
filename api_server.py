@@ -60,7 +60,7 @@ class Operation(BaseModel):
     moves: list[Move]
 
 
-def create_app(folder, token):
+def create_app(folder, token, *, dashboard_picker=False):
     if not token or len(token) < 32 or not token.isascii() or not token.isalnum() and not all(
         c.isalnum() or c in "_-" for c in token
     ):
@@ -102,15 +102,57 @@ def create_app(folder, token):
     def result(run):
         return {"operation_id": run["id"] if run else None, "moves": run["moves"] if run else []}
 
+    from fastapi.responses import FileResponse
+    from organizer.engine import inspect_history
+    from organizer.dashboard import choose_folder
+
+    @app.get("/", include_in_schema=False)
+    def dashboard():
+        return FileResponse(Path(__file__).with_name("dashboard.html"),
+                            headers={"X-Frame-Options": "DENY", "Cache-Control": "no-store"})
+
+    @app.get("/workspace", dependencies=[Depends(auth)])
+    def workspace():
+        with guarded():
+            return {"directory": str(root), "picker": dashboard_picker}
+
+    @app.post("/workspace/pick", dependencies=[Depends(auth)])
+    def pick():
+        nonlocal root, selected
+        if not dashboard_picker:
+            raise HTTPException(403, "Server started with a fixed folder")
+        choice = choose_folder()
+        if choice:
+            candidate = select_root(choice)
+            with lock, pin_tree(candidate):
+                root, selected = candidate, identity(candidate)
+                cache.clear()
+        return workspace()
+
+    @app.get("/operations", dependencies=[Depends(auth)])
+    def history():
+        with guarded():
+            return inspect_history(root)
+
+    @app.get("/operations/{operation_id}", dependencies=[Depends(auth)])
+    def detail(operation_id: str):
+        with guarded():
+            try:
+                return result(inspect_history(root, operation_id))
+            except SafetyError as exc:
+                if str(exc).startswith("Unknown run"):
+                    raise HTTPException(404, "Unknown operation") from exc
+                raise
+
     @app.get("/health")
     def health() -> dict[str, Literal["ok"]]:
         return {"status": "ok"}
 
     @app.post("/plans", dependencies=[Depends(auth)], response_model=Preview, status_code=201)
     def plan(body: Directory):
-        if not Path(body.directory).is_absolute() or Path(body.directory) != root:
-            raise HTTPException(403, "Directory must match the operator-selected root")
         with guarded():
+            if not Path(body.directory).is_absolute() or Path(body.directory) != root:
+                raise HTTPException(403, "Directory must match the operator-selected root")
             proposal = build_plan(root, recursive=body.recursive)
             cache[proposal.token] = (proposal, body.recursive)
             cache.move_to_end(proposal.token)

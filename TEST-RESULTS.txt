@@ -1,4 +1,5 @@
 test_access_and_validation (test_http.HttpTests.test_access_and_validation) ... ok
+test_dashboard_and_journal (test_http.HttpTests.test_dashboard_and_journal) ... ok
 test_round_trip (test_http.HttpTests.test_round_trip) ... ok
 test_stale_and_strict_approval (test_http.HttpTests.test_stale_and_strict_approval) ... ok
 test_cli_run_history_preview_and_rollback (test_organizer.AgentTests.test_cli_run_history_preview_and_rollback) ... ok
@@ -28,6 +29,6 @@ test_unapproved_and_outdated_cli_plans_do_nothing (test_organizer.AgentTests.tes
 test_unrecognized_state_directory_preserved (test_organizer.AgentTests.test_unrecognized_state_directory_preserved) ... ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 16.989s
+Ran 29 tests in 15.969s
 
 OK (skipped=1)

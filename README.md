@@ -139,3 +139,15 @@ Set-Location -LiteralPath 'C:\agent-projects\file-organizer-agent'
 ```
 
 Test tạo junction tạm sẽ tự bỏ qua nếu Windows từ chối quyền tạo. Một test riêng kiểm tra junction tương thích có sẵn trên Windows bằng thao tác chỉ đọc.
+
+## Dashboard trên Windows
+
+Trong thư mục repo, chạy một lệnh PowerShell:
+
+```powershell
+.\start.cmd
+```
+
+Máy cần Python 3.13+ trên PATH khi chạy từ source. Lần đầu launcher tạo .venv và tải các gói FastAPI/Uvicorn. Những lần sau chạy cục bộ. Chọn thư mục trong hộp thoại Windows. Trình duyệt mở dashboard tại http://127.0.0.1:8101 với token phiên tự sinh. Đóng server bằng Ctrl+C.
+
+Bấm **Quét và xem trước** để đọc danh mục, kích thước, đường dẫn đích và lý do phân loại. Bấm **Duyệt di chuyển** rồi xác nhận để thực hiện các dòng move. Mở từng lượt trong **Lịch sử thao tác** để đọc kết quả và lỗi theo file, hoặc chọn **Hoàn tác** và xác nhận. Đổi thư mục bằng nút **Chọn thư mục** sẽ bỏ kế hoạch trước đó. Khi chạy bằng api_server.py --root, dashboard giữ cố định thư mục đã chỉ định và yêu cầu token của server. Toàn bộ HTML, CSS và JavaScript phục vụ từ localhost.

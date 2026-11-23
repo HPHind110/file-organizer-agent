@@ -75,3 +75,15 @@ class HttpTests(unittest.TestCase):
         self.file.write_bytes(b"modified")
         self.assertEqual(self.client.post(path,headers=self.auth,json={"approved":True}).status_code,409)
         self.assertEqual(list(self.root.iterdir()),[self.file])
+
+    def test_dashboard_and_journal(self):
+        self.assertIn("File Organizer", self.client.get("/").text)
+        for path in ["/workspace", "/operations", "/operations/abc"]:
+            self.assertEqual(self.client.get(path).status_code, 401)
+        self.assertEqual(self.client.get("/workspace", headers=self.auth).json()["directory"], str(self.root))
+        self.assertEqual(self.client.post("/workspace/pick", headers=self.auth).status_code, 403)
+        run = self.client.post("/plans/" + self.plan()["plan_id"] + "/execute",
+                               headers=self.auth, json={"approved": True}).json()
+        history = self.client.get("/operations", headers=self.auth).json()
+        self.assertEqual(history[0]["id"], run["operation_id"])
+        self.assertEqual(self.client.get("/operations/" + history[0]["id"], headers=self.auth).json(), run)
